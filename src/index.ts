@@ -8,6 +8,7 @@ import { dispatchWithCascade } from "./routing/cascade";
 import { augmentRequestWithWebSearch, dispatchSearch } from "./search/dispatcher";
 import { fetchWithJinaReader } from "./search/jina";
 import { handleGenerateImages, handleEditImages } from "./adapters/images";
+import { handleJevDecision } from "./decisions/jev";
 import { handleAudioSpeech, handleAudioTranscriptions, handleAudioTranslations } from "./adapters/audio";
 import { exchangeAntigravityCode, getAntigravityAuthUrl } from "./oauth/antigravity";
 import { executeMcpTool, handleMcpSse, MCP_TOOLS_LIST } from "./mcp/server";
@@ -183,6 +184,9 @@ app.get("/v1/models", async (c) => {
 
   return c.json({ object: "list", data: [...comboModels, ...activeModels] });
 });
+
+// Jev uses OpenRouter's typed Decisions API, separate from chat completions.
+app.post("/v1/decisions", handleJevDecision);
 
 // ---------------------------------------------------------------------------
 // POST /v1/chat/completions

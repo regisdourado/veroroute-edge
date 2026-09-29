@@ -2,6 +2,29 @@
 
 # ⚡ VeroRoute Edge
 
+## Jev Decisions no fork regisdourado
+
+Este fork expõe `POST /v1/decisions` para decisões estruturadas com
+`typesafe/jev-1.13` via OpenRouter. O endpoint é separado do chat: ele recebe
+`state` e `questions` e retorna as respostas tipadas do Jev. Nenhuma automação
+o chama automaticamente.
+
+Configure `OPENROUTER_API_KEYS` como segredo do Worker antes de usar. A chamada
+exige `Authorization: Bearer` com o `AUTH_TOKEN` mestre ou uma chave virtual que
+permita explicitamente `typesafe/jev-1.13`. Sem a chave OpenRouter, o endpoint
+retorna HTTP 503. O uso do Jev é cobrado pela OpenRouter.
+
+```bash
+curl https://veroroute-edge.regisdourado.workers.dev/v1/decisions \
+  -H "Authorization: Bearer <CHAVE_DO_GATEWAY>" \
+  -H "Content-Type: application/json" \
+  -d '{"state":{"ticket":"A página de pagamento está em branco"},"questions":{"is_bug":{"type":"noul","instructions":"O cliente relata um defeito?","criteria":{"true":"Há comportamento quebrado ou inesperado","false":"É uma dúvida ou pedido de recurso"}}}}'
+```
+
+Consulte o [formato da Decisions API](https://openrouter.ai/docs/api/api-reference/alphadecisions/submit-a-decisions-request)
+antes de ligar uma automação. Uma chave virtual genérica, sem lista explícita
+de modelos permitidos, não autoriza este endpoint.
+
 ### Aerodynamic Serverless AI Gateway & Smart Router for Cloudflare Workers
 ### Gateway de IA Serverless Aerodinâmico e Roteador Inteligente para Cloudflare Workers
 
@@ -325,4 +348,3 @@ Este projeto é distribuído sob a licença **MIT**. Veja [LICENSE](LICENSE) par
 - **Origem & Lineage**: Inspirado diretamente no [OmniRoute](https://github.com/diegosouzapw/OmniRoute) criado por [@diegosouzapw](https://github.com/diegosouzapw) e nos conceitos do VeroRoute.
 
 > ⚠️ **Aviso de Atribuição Obrigatória**: Conforme os termos da licença MIT, qualquer clonagem, fork ou redistribuição pública deste código **deve obrigatoriamente manter o aviso de direitos autorais, o nome do autor original e o link de referência para o repositório upstream oficial**.
-
