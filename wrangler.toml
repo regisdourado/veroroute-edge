@@ -11,10 +11,8 @@ keep_vars = true
 binding = "AI"
 
 [vars]
-# AUTH_TOKEN define a senha de acesso ao painel e a Admin API.
-# O valor "admin" entra em toda instalacao nova; o usuario troca em
-# Settings -> Variables and Secrets quando quiser.
-AUTH_TOKEN = "admin"
+# Configure AUTH_TOKEN como segredo no painel Cloudflare antes de usar a Admin API.
+# Sem o segredo, a autenticacao falha fechada na primeira instalacao.
 SEARXNG_URL = "opcional"
 DEFAULT_ROUTING_STRATEGY = "priority"
 DEFAULT_OUTPUT_STYLE = "none"
